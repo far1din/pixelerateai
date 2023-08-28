@@ -1,19 +1,16 @@
-import { GithubSVG } from "@/lib/svg";
 import ImageSlider from "./components/ImageSlider";
+import GithubButton from "./components/GithubButton";
 
 function Auth() {
     return (
         <main className="h-screen">
-            <div className="grid md:grid-cols-2 items-center w-full h-full p-2">
-                <div className="flex flex-col items-center gap-5">
+            <div className="grid md:grid-cols-2 items-center w-full h-full">
+                <div className="flex flex-col items-center gap-5 p-2">
                     <div className="w-80 md:w-96 flex flex-col gap-1">
                         <h1 className="text-4xl font-bold">Welcome</h1>
                         <p className="text-neutral-500 text-lg">Please sign in to continue...</p>
                     </div>
-                    <button className="hover:opacity-80 ease-in duration-75 flex justify-between items-center bg-slate-950 w-80 md:w-96 text-neutral-100 p-2.5 rounded-xl text-2xl">
-                        <GithubSVG width={37} height={37} className="fill-neutral-100" />
-                        <span className="w-full">Sign in with github</span>
-                    </button>
+                    <GithubButton />
                 </div>
                 <div className="hidden bg-black h-full text-neutral-100 md:flex flex-col gap-7 justify-center items-center p-4">
                     <div className="flex flex-col items-center text-center gap-2">

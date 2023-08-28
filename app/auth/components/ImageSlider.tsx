@@ -14,9 +14,16 @@ const images = [
 function ImageSlider() {
     return (
         <div>
-            <Carousel autoPlay infiniteLoop showArrows={false} stopOnHover={false} showStatus={false}>
+            <Carousel
+                autoPlay
+                infiniteLoop
+                showThumbs={false}
+                showArrows={false}
+                stopOnHover={false}
+                showStatus={false}
+            >
                 {images.map((image, index) => (
-                    <div key={index} className="slide xl:w-[80px]">
+                    <div key={index} className="slide xl:w-[80px] 2xl:w-[100px]">
                         <Image
                             src={image.url}
                             alt={"AI Generated image"}
