@@ -27,3 +27,56 @@ export const GithubSVG = (props: SVGProps) => {
         </svg>
     );
 };
+
+export const PixelerateLogoSVG = (props: SVGProps) => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={props.width}
+            height={props.height}
+            className={`${props.className}`}
+            onClick={props.onClick}
+            viewBox="0 0 1080 1080"
+        >
+            <rect width="100%" height="100%" fill="transparent" />
+            <path
+                fill="#6C95C7"
+                fillRule="evenodd"
+                d="M250.495 154.97c2.771 1.509 5.911 2.033 9.42 1.57v199.39H60.525V154.97h189.97z"
+                opacity="0.993"
+                vectorEffect="non-scaling-stroke"
+            />
+            <path
+                fill="#257D9E"
+                fillRule="evenodd"
+                d="M250.97 154.974c129.81-.497 259.598.027 389.36 1.57v199.39H260.39v-199.39c-3.509.463-6.649-.061-9.42-1.57z"
+                opacity="0.992"
+                vectorEffect="non-scaling-stroke"
+            />
+            <path
+                fill="#257D9E"
+                fillRule="evenodd"
+                d="M1019.475 544.645h-199.39v-199.39h199.39v199.39z"
+                vectorEffect="non-scaling-stroke"
+            />
+            <path
+                fill="#AAABED"
+                fillRule="evenodd"
+                d="M60.525 356.25h199.39v188.4H60.525v-188.4z"
+                vectorEffect="non-scaling-stroke"
+            />
+            <path
+                fill="#6C95C7"
+                fillRule="evenodd"
+                d="M60.525 544.96h199.39v178.98H60.525V544.96zM820.085 545.12h199.39v379.94h-199.39V545.12z"
+                vectorEffect="non-scaling-stroke"
+            />
+            <path
+                fill="#AAABED"
+                fillRule="evenodd"
+                d="M819.61 724.25v200.96H439.67V724.25h379.94z"
+                vectorEffect="non-scaling-stroke"
+            />
+        </svg>
+    );
+};
