@@ -15,11 +15,12 @@ function Preview() {
                     .slice()
                     .reverse()
                     .map((image, index) => (
-                        <div className="relative">
+                        <div key={index} className="relative">
                             <Trash2
                                 onClick={() => removeImage(images.length - 1 - index)}
                                 className="absolute p-1 bg-white/70 dark:bg-slate-900/70 rounded-br-md cursor-pointer hover:stroke-red-500 ease-in duration-75"
                             />
+                            {/* eslint-disable-next-line */}
                             <img className="h-20 w-auto rounded-lg" src={String(image)} />
                         </div>
                     ))}
