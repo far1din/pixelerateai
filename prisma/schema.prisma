@@ -46,6 +46,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+
+  credit          Int       @default(5)
+  custom_ai_model CustomAiModel[]
 }
 
 model VerificationToken {
@@ -56,3 +59,27 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 // NEXTAUTH
+enum CustomAiModelStatus {
+  created
+  generating
+  failed
+}
+
+
+model CustomAiModel {
+  id String    @id @default(cuid())
+
+  replicate_model_id      String
+  replicate_model_version String
+  replicate_destination   String
+
+  status            CustomAiModelStatus @default(generating)  
+  input_images_url  String
+  cover_image       String?
+  model_nickname    String
+
+  user_id String
+  user    User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  created_at DateTime @default(now())
+}

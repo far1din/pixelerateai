@@ -1,3 +1,4 @@
+import { headers } from "@/lib/utils";
 import axios from "axios";
 import JSZip from "jszip";
 import { createContext, useContext, useState } from "react";
@@ -39,12 +40,19 @@ export const TrainAiPopupContextProvider = ({ children }: { children: React.Reac
     };
 
     const uploadModelToReplicate = (zipUrl: string) => {
-        setIsLoading(false);
+        axios
+            .post("/api/replicate/train-model", { zipUrl, modelName }, headers)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => console.log(err))
+            .finally(() => setIsLoading(false));
         console.log(zipUrl);
         //
     };
 
     const uploadImagesToAWS = async () => {
+        setImagesUploaded(false);
         setIsLoading(true);
         setErrorMessage(null);
         const content = await zipImages();
@@ -65,6 +73,7 @@ export const TrainAiPopupContextProvider = ({ children }: { children: React.Reac
             .put(response.presignedUrl, content, { headers: { "Content-Type": "application/zip" } })
             .then((res) => {
                 // post request to replicate
+                setImagesUploaded(true);
                 uploadModelToReplicate(response.zipUrl);
             })
             .catch((err) => {

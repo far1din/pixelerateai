@@ -7,6 +7,8 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+export const headers = { headers: { "Content-type": "application/json" } };
+
 export const getUserFromSession = async (session: Session | null) => {
     if (!session) return null;
 
