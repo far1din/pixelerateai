@@ -39,6 +39,7 @@ export async function POST(request: Request) {
             input: {
                 input_images: zipUrl,
             },
+            webhook: process.env.REPLICATE_TRAIN_WEBHOOK_URL,
         }
     );
 

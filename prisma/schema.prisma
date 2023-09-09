@@ -69,7 +69,7 @@ enum CustomAiModelStatus {
 model CustomAiModel {
   id String    @id @default(cuid())
 
-  replicate_model_id      String
+  replicate_model_id      String @unique
   replicate_model_version String
   replicate_destination   String
 

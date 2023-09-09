@@ -43,11 +43,10 @@ export const TrainAiPopupContextProvider = ({ children }: { children: React.Reac
         axios
             .post("/api/replicate/train-model", { zipUrl, modelName }, headers)
             .then((res) => {
-                console.log(res.data);
+                location.reload();
             })
             .catch((err) => console.log(err))
             .finally(() => setIsLoading(false));
-        console.log(zipUrl);
         //
     };
 

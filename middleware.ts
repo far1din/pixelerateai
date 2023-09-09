@@ -7,6 +7,8 @@ export default async function middleware(req: NextRequestWithAuth, event: NextFe
     const isAuthenticated = !!token;
 
     const path = req.nextUrl.pathname;
+    if (ignoredPaths.includes(path)) return;
+
     if (path === "/auth" && isAuthenticated) {
         return NextResponse.redirect(new URL("/", req.url));
     }
@@ -23,3 +25,5 @@ export default async function middleware(req: NextRequestWithAuth, event: NextFe
 export const config = {
     matcher: "/:path*",
 };
+
+const ignoredPaths = ["/api/replicate/train-model/webhook"];
