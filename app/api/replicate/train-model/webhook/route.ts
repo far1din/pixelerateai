@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { Prediction } from "replicate";
 
 export async function POST(request: Request) {
-    const { id, version, status }: Prediction = await request.json();
+    const { id, version, status, output }: Prediction = await request.json();
 
     if (status === "processing" || status === "starting") {
         return NextResponse.json({ message: "Training", details: "Your model is being trained..." });
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     if (status === "succeeded") {
         const updatedModel = await prisma.customAiModel.update({
             where: { replicate_model_id: id },
-            data: { status: "created", replicate_model_version: version },
+            data: { status: "created", replicate_model_version: output.version },
         });
         // todo: send email to user
     }
