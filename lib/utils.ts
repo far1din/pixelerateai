@@ -20,3 +20,12 @@ export const getUserFromSession = async (session: Session | null) => {
 
     return user;
 };
+
+export const getUserEmailFromSession = (session: Session | null) => {
+    if (!session) return null;
+
+    const email = session.user?.email;
+    if (!email) return null;
+
+    return email;
+};

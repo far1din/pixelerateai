@@ -6,13 +6,14 @@ import Link from "next/link";
 import { SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 import ToggleTheme from "./ToggleTheme";
+import { PUBLIC_IMAGES } from "@/lib/defaults";
 
 function MenuSheet(props: { session: Session }) {
     return (
         <SheetContent className="dark:bg-black">
             <SheetHeader className="items-start">
                 <Image
-                    src={props.session.user?.image || "/images/avatar_placeholder.jpeg"}
+                    src={props.session.user?.image || PUBLIC_IMAGES.avatarPlaceholder}
                     alt="Profile picture"
                     width={69}
                     height={69}

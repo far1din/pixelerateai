@@ -7,6 +7,7 @@ import { Skeleton } from "./ui/skeleton";
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import MenuSheet from "./MenuSheet";
+import { PUBLIC_IMAGES } from "@/lib/defaults";
 
 function Navigation() {
     const { data: session, status } = useSession();
@@ -20,7 +21,7 @@ function Navigation() {
                 <Sheet>
                     <SheetTrigger asChild>
                         <Image
-                            src={session.user?.image || "/images/avatar_placeholder.jpeg"}
+                            src={session.user?.image || PUBLIC_IMAGES.avatarPlaceholder}
                             alt="Profile picture"
                             width={37}
                             height={37}
