@@ -13,7 +13,7 @@ function Navigation() {
     const { data: session, status } = useSession();
 
     return (
-        <nav className="backdrop-blur-sm sticky top-0 flex justify-between items-center px-4 py-2">
+        <nav className="border-b-2 backdrop-blur-sm sticky top-0 flex justify-between items-center px-4 py-2">
             <Link href={"/"}>
                 <PixelerateLogoSVG width={47} height={47} />
             </Link>

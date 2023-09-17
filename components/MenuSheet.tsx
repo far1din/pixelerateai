@@ -24,7 +24,7 @@ function MenuSheet(props: { session: Session }) {
             </SheetHeader>
             <div className="flex flex-col gap-4 py-4">
                 <Link href={"/"}>Home</Link>
-                <Link href={"/"}>My models</Link>
+                <Link href={"/my-models"}>My models</Link>
                 <Link href={"/"}>Gallery</Link>
             </div>
             <SheetFooter className="border-t-2 py-2 justify-between">

@@ -30,3 +30,6 @@ export const DEFAULT_MODELS = [
         createdAt: new Date("08/28/2023"),
     },
 ];
+
+export type DefaultDimensionsProps = 128 | 256 | 512 | 576 | 640 | 704 | 768 | 832 | 896 | 960 | 1024;
+export const DEFAULT_DIMENSIONS: DefaultDimensionsProps[] = [128, 256, 512, 576, 640, 704, 768, 832, 896, 960, 1024];

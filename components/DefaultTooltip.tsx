@@ -11,7 +11,7 @@ function DefaultTooltip(props: DefaultTooltipProps) {
         <TooltipProvider delayDuration={props.delayDuration || 0}>
             <Tooltip>
                 <TooltipTrigger>{props.children}</TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-w-[251px] text-center">
                     <p>{props.text}</p>
                 </TooltipContent>
             </Tooltip>
