@@ -13,7 +13,7 @@ function ImageView() {
                 {/* eslint-disable-next-line */}
                 <img className="md:absolute p-2 h-auto w-auto max-w-full max-h-full" src={PUBLIC_IMAGES.sdxlCover} />
             </div>
-            <div className="flex gap-2 justify-center pb-2">
+            <div className="bg-slate-50 dark:bg-slate-950 flex gap-2 justify-center pb-2">
                 {images.map((image, index) => (
                     // eslint-disable-next-line
                     <img

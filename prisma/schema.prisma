@@ -48,7 +48,9 @@ model User {
   sessions      Session[]
 
   credit          Int       @default(5)
-  custom_ai_model CustomAiModel[]
+  custom_ai_models CustomAiModel[]
+  image_prompts    ImagePrompt[]
+  generated_images GeneratedImage[]
 }
 
 model VerificationToken {
@@ -65,6 +67,11 @@ enum CustomAiModelStatus {
   failed
 }
 
+enum Visibility {
+  private
+  public
+}
+
 
 model CustomAiModel {
   id String    @id @default(cuid())
@@ -74,12 +81,50 @@ model CustomAiModel {
   replicate_destination   String
 
   status            CustomAiModelStatus @default(generating)  
-  input_images_url  String
+  input_images_url  String?
   cover_image       String?
   model_nickname    String
+  visibility        Visibility @default(private)
 
-  user_id String
-  user    User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String?
+  user    User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  image_prompts ImagePrompt[]
   
+  created_at DateTime @default(now())
+}
+
+model ImagePrompt {
+  id String    @id @default(cuid())
+
+  prompt            String
+  negative_prompt   String @default("")
+  width             Int
+  height            Int
+  number_of_outputs Int @default(1)
+  seed              BigInt
+
+  replicate_id  String @unique
+
+  created_at    DateTime @default(now())
+
+  custom_ai_model_id  String
+  custom_ai_model     CustomAiModel     @relation(fields: [custom_ai_model_id], references: [id], onDelete: Cascade)
+  user_id             String
+  user                User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  generated_images GeneratedImage[]
+}
+
+model GeneratedImage {
+  id  String    @id @default(cuid())
+
+  url String
+
+  image_prompt_id String
+  image_prompt    ImagePrompt     @relation(fields: [image_prompt_id], references: [id], onDelete: Cascade)
+  user_id         String
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   created_at DateTime @default(now())
 }

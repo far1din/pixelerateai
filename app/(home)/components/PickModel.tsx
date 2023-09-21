@@ -36,8 +36,9 @@ function PickModel() {
                     {m.map((model, index) => (
                         <div
                             key={index}
-                            className="ease-in duration-75 opacity-50 cursor-pointer hover:opacity-80 w-40 rounded-lg overflow-hidden border-2"
+                            className="relative ease-in duration-75 opacity-50 cursor-pointer hover:opacity-80 w-40 rounded-lg overflow-hidden border-2"
                         >
+                            <div className="absolute w-full h-full" />
                             <Image
                                 alt="ai model"
                                 src={model.coverImage}

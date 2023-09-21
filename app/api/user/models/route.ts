@@ -15,17 +15,25 @@ export async function GET(request: Request) {
 
     const user = await prisma.user.findUnique({
         where: { email: email },
-        include: { custom_ai_model: { orderBy: { created_at: "desc" } } },
+        // include: { custom_ai_model: { orderBy: { created_at: "desc" } } },
+    });
+    if (!user)
+        return NextResponse.json(
+            { message: "Unauthorized", details: "You are not authorized to perform this operation..." },
+            { status: 401 }
+        );
+
+    const models = await prisma.customAiModel.findMany({
+        where: { user_id: user.id },
     });
 
-    const customAiModels =
-        user?.custom_ai_model.map((model) => ({
-            name: model.model_nickname,
-            staus: model.status,
-            version: model.status === "created" ? model.status : null,
-            coverImage: model.cover_image,
-            createdAt: model.created_at,
-        })) || [];
+    const customAiModels = models.map((model) => ({
+        name: model.model_nickname,
+        staus: model.status,
+        version: model.status === "created" ? model.status : null,
+        coverImage: model.cover_image,
+        createdAt: model.created_at,
+    }));
 
     return NextResponse.json({ customAiModels });
 }
