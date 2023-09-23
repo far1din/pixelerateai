@@ -11,7 +11,7 @@ type MainContextProps = {
     handleThemeChange: () => void;
 };
 
-type AiModelProps =
+export type AiModelProps =
     | {
           name: string;
           status: $Enums.CustomAiModelStatus;

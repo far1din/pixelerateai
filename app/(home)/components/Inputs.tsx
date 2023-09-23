@@ -1,11 +1,12 @@
 import DefaultTooltip from "@/components/DefaultTooltip";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon, Loader2 } from "lucide-react";
 import Dropdown_ from "./Dropdown_";
 import Counter_ from "./Counter_";
 import { useHomeContext } from "../utils/HomeContext";
 
 function Inputs() {
     const {
+        isCreating,
         prompt,
         setPrompt,
         negativePrompt,
@@ -14,10 +15,10 @@ function Inputs() {
         setWidth,
         height,
         setHeight,
-        numberOfOutputs,
+        handleCreate,
     } = useHomeContext();
 
-    const data = { prompt, negativePrompt, width, height, numberOfOutputs };
+    const disabled = prompt.length < 1 || isCreating;
     return (
         <>
             {/* Prompt */}
@@ -90,10 +91,13 @@ function Inputs() {
             {/* Create */}
             <div>
                 <button
-                    onClick={() => console.log(data)}
-                    className="hover:opacity-80 ease-in duration-75 text-xl bg-violet-500 px-2 py-1 rounded-lg text-neutral-100"
+                    disabled={disabled}
+                    onClick={() => handleCreate()}
+                    className={`${
+                        disabled ? "bg-neutral-500" : "hover:opacity-80 bg-violet-500"
+                    } ease-in duration-75 text-xl px-2 py-1 rounded-lg text-neutral-100`}
                 >
-                    Create
+                    {isCreating ? <Loader2 width={28} height={28} className="animate-spin" /> : "Create"}
                 </button>
             </div>
         </>
