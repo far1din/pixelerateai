@@ -6,15 +6,17 @@ type ThemeProps = "dark" | "light";
 
 type MainContextProps = {
     theme: string;
-    customAiModels: CustomAiModelProps;
+    customAiModels: AiModelProps;
+    defaultAiModels: AiModelProps;
     handleThemeChange: () => void;
 };
 
-type CustomAiModelProps =
+type AiModelProps =
     | {
           name: string;
-          staus: $Enums.CustomAiModelStatus;
-          version: "created" | null;
+          status: $Enums.CustomAiModelStatus;
+          version: string | null;
+          imagesTaken: number;
           coverImage: string | null;
           createdAt: Date;
       }[]
@@ -24,7 +26,8 @@ const MainContext = createContext<MainContextProps | null>(null);
 
 export const MainContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [theme, setTheme] = useState<string>("");
-    const [customAiModels, setCustomAiModels] = useState<CustomAiModelProps>(null);
+    const [customAiModels, setCustomAiModels] = useState<AiModelProps>(null);
+    const [defaultAiModels, setDefaultAiModels] = useState<AiModelProps>(null);
 
     useEffect(() => {
         const prefersDarkmode: boolean = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -35,8 +38,11 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
         setTheme(currentTheme);
 
         axios
-            .get("/api/user/models")
-            .then((res) => setCustomAiModels(res.data.customAiModels))
+            .get("/api/user/info")
+            .then((res) => {
+                setDefaultAiModels(res.data.defaultAiModels);
+                setCustomAiModels(res.data.customAiModels);
+            })
             .catch((err) => console.log(err));
     }, []);
 
@@ -55,7 +61,11 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
         setTheme((prev) => (prev === "light" ? "dark" : "light"));
     };
 
-    return <MainContext.Provider value={{ theme, customAiModels, handleThemeChange }}>{children}</MainContext.Provider>;
+    return (
+        <MainContext.Provider value={{ theme, defaultAiModels, customAiModels, handleThemeChange }}>
+            {children}
+        </MainContext.Provider>
+    );
 };
 
 export const useMainContext = () => useContext(MainContext) as MainContextProps;

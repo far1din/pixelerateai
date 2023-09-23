@@ -90,6 +90,7 @@ model CustomAiModel {
   user    User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   image_prompts ImagePrompt[]
+  generated_images GeneratedImage[]
   
   created_at DateTime @default(now())
 }
@@ -121,6 +122,8 @@ model GeneratedImage {
 
   url String
 
+  custom_ai_model_id  String
+  custom_ai_model     CustomAiModel     @relation(fields: [custom_ai_model_id], references: [id], onDelete: Cascade)
   image_prompt_id String
   image_prompt    ImagePrompt     @relation(fields: [image_prompt_id], references: [id], onDelete: Cascade)
   user_id         String

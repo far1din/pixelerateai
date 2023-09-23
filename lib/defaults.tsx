@@ -14,20 +14,20 @@ export const DEFAULT_MODELS = [
     {
         name: "Sdxl tng interior - fofr",
         coverImage: PUBLIC_IMAGES.sdxlTngInteriorCover,
-        version: "stability-ai/sdxl:da77bc59ee60423279fd632efb4795ab731d9e3ca9705ef3341091fb989b7eaf",
-        createdAt: new Date("08/02/2023"),
+        version: "fofr/sdxl-tng-interior:45f1d0cf3445f54d4b19a2a03e53b15abd7237ea72e2fb4824b193ffa429e31f",
+        createdAt: new Date("08/28/2023"),
     },
     {
         name: "Stable diffusion XL",
         coverImage: PUBLIC_IMAGES.sdxlCover,
-        version: "stability-ai/sdxl:da77bc59ee60423279fd632efb4795ab731d9e3ca9705ef3341091fb989b7eaf",
+        version: "stability-ai/sdxl:8beff3369e81422112d93b89ca01426147de542cd4684c244b673b105188fe5f",
         createdAt: new Date("08/02/2023"),
     },
     {
         name: "Van Gogh Diffusion - cjwbw",
         coverImage: PUBLIC_IMAGES.vanGoghDiffusionCover,
-        version: "fofr/sdxl-tng-interior:45f1d0cf3445f54d4b19a2a03e53b15abd7237ea72e2fb4824b193ffa429e31f",
-        createdAt: new Date("08/28/2023"),
+        version: "cjwbw/van-gogh-diffusion:2d43b996608bd7d4aba4cacbe9b751399892a9d6cbc27a39f8f49347a3a16f9c",
+        createdAt: new Date("11/09/2022"),
     },
 ];
 

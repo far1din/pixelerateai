@@ -9,7 +9,7 @@ import { useMainContext } from "@/components/MainContext";
 import FailedModelCard from "./components/FailedModelCard";
 
 function Page() {
-    const { customAiModels } = useMainContext();
+    const { defaultAiModels, customAiModels } = useMainContext();
 
     return (
         <main className="h-screen flex flex-col items-center">
@@ -26,15 +26,15 @@ function Page() {
                         <CreateModel />
                         {customAiModels ? (
                             customAiModels.map((model, index) =>
-                                model.staus === "created" ? (
+                                model.status === "created" ? (
                                     <TrainedModelCard
                                         key={index}
                                         image={model.coverImage || PUBLIC_IMAGES.avatarPlaceholder}
                                         name={model.name}
                                         createdAt={new Date(model.createdAt).toLocaleDateString("en")}
-                                        imagesTaken={103}
+                                        imagesTaken={model.imagesTaken}
                                     />
-                                ) : model.staus === "generating" ? (
+                                ) : model.status === "generating" ? (
                                     <GeneratingModelCard key={index} name={model.name} />
                                 ) : (
                                     <FailedModelCard
@@ -51,34 +51,17 @@ function Page() {
                                 <LoaderCard />
                             </>
                         )}
-                        {/* <CreateModel />
-                        <GeneratingModelCard name="My test model 123" />
-                        <TrainedModelCard
-                            image={PUBLIC_IMAGES.avatarPlaceholder}
-                            name="Kris"
-                            createdAt="22.22.2010"
-                            imagesTaken={103}
-                        />
-                        <LoaderCard />
-                        <TrainedModelCard
-                            image="/images/sdxl_cover.jpg"
-                            name="Stable diffusion XL"
-                            createdAt="22.22.2010"
-                            imagesTaken={19060}
-                            public
-                        />
-                        <LoaderCard /> */}
-
-                        {DEFAULT_MODELS.map((model, index) => (
-                            <TrainedModelCard
-                                key={index}
-                                image={model.coverImage}
-                                name={model.name}
-                                createdAt={model.createdAt.toLocaleDateString("en")}
-                                imagesTaken={19060}
-                                public
-                            />
-                        ))}
+                        {defaultAiModels &&
+                            defaultAiModels.map((model, index) => (
+                                <TrainedModelCard
+                                    key={index}
+                                    image={model.coverImage || PUBLIC_IMAGES.avatarPlaceholder}
+                                    name={model.name}
+                                    createdAt={new Date(model.createdAt).toLocaleDateString("en")}
+                                    imagesTaken={model.imagesTaken}
+                                    public
+                                />
+                            ))}
                     </div>
                 </div>
             </div>
