@@ -61,7 +61,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 // NEXTAUTH
-enum CustomAiModelStatus {
+enum Status {
   created
   generating
   failed
@@ -80,7 +80,7 @@ model CustomAiModel {
   replicate_model_version String
   replicate_destination   String
 
-  status            CustomAiModelStatus @default(generating)  
+  status            Status @default(generating)  
   input_images_url  String?
   cover_image       String?
   model_nickname    String
@@ -107,7 +107,9 @@ model ImagePrompt {
 
   replicate_id  String @unique
 
-  created_at    DateTime @default(now())
+  status        Status    @default(generating)
+  error         String?
+  created_at    DateTime  @default(now())
 
   custom_ai_model_id  String
   custom_ai_model     CustomAiModel     @relation(fields: [custom_ai_model_id], references: [id], onDelete: Cascade)
