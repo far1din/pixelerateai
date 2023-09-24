@@ -1,6 +1,9 @@
 import { AiModelProps, useMainContext } from "@/components/MainContext";
 import { DefaultDimensionsProps, PUBLIC_IMAGES } from "@/lib/defaults";
+import { headers } from "@/lib/utils";
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { Prediction } from "replicate";
 
 type HomeContextProps = {
     prompt: string;
@@ -21,6 +24,7 @@ type HomeContextProps = {
     imageIndex: number;
     setImageIndex: React.Dispatch<React.SetStateAction<number>>;
     setModelVersion: React.Dispatch<React.SetStateAction<string | null>>;
+    setModelId: React.Dispatch<React.SetStateAction<string | null>>;
     handleCreate: () => void;
 };
 
@@ -45,6 +49,7 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
     const [isCreating, setIsCreating] = useState<boolean>(false);
     const [models, setModels] = useState<AiModelProps>(null);
     const [modelVersion, setModelVersion] = useState<string | null>(null);
+    const [modelId, setModelId] = useState<string | null>(null);
 
     const [generatedImages, setGeneratedImages] = useState<string[] | null>(null);
     const [imageIndex, setImageIndex] = useState<number>(0);
@@ -57,22 +62,54 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         if (models) {
+            setModelId(models[0].id);
             setModelVersion(models[0].version);
         }
     }, [models]);
 
     const handleCreate = () => {
-        const data = { prompt, negativePrompt, width, height, numberOfOutputs, modelVersion };
+        const data = { prompt, negativePrompt, width, height, numberOfOutputs, modelVersion, modelId };
         setIsCreating(true);
         setGeneratedImages(null);
         setImageIndex(0);
 
-        setTimeout(() => {
-            setIsCreating(false);
+        // create a prediction
+        axios
+            .post("/api/replicate/create-image", data, headers)
+            .then((res) => pollReplicate(res.data.predictionId))
+            .catch((err) => {
+                setIsCreating(false);
+                console.log(err);
+            });
+    };
 
-            setGeneratedImages(TEST_IMAGES);
-            console.log(data);
-        }, 3000);
+    const pollReplicate = async (predictionId: string) => {
+        while (true) {
+            let prediction: Prediction | null = await axios
+                .get(`api/replicate/create-image/prediction/${predictionId}`, headers)
+                .then((res) => res.data.prediction)
+                .catch((err) => null);
+
+            if (prediction === null) {
+                break;
+            }
+
+            console.log(prediction);
+            if (prediction.status === "succeeded") {
+                setIsCreating(false);
+                setGeneratedImages(prediction.output);
+                break;
+            } else if (prediction.status === "failed") {
+                console.log(prediction.error); // todo: fix toast error message
+                setIsCreating(false);
+                break;
+            } else if (prediction.status === "canceled") {
+                setIsCreating(false);
+                break;
+            } else {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+            }
+        }
     };
 
     return (
@@ -96,6 +133,7 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
                 imageIndex,
                 setImageIndex,
                 setModelVersion,
+                setModelId,
                 handleCreate,
             }}
         >

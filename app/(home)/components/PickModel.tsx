@@ -8,7 +8,7 @@ import { useHomeContext } from "../utils/HomeContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function PickModel() {
-    const { models, modelVersion, setModelVersion } = useHomeContext();
+    const { models, modelVersion, setModelId, setModelVersion } = useHomeContext();
 
     const [constraint, setConstraint] = useState({
         top: 0,
@@ -39,7 +39,10 @@ function PickModel() {
                     {models ? (
                         models.map((model, index) => (
                             <div
-                                onClick={() => setModelVersion(model.version)}
+                                onClick={() => {
+                                    setModelId(model.id);
+                                    setModelVersion(model.version);
+                                }}
                                 key={index}
                                 className={`${
                                     modelVersion != model.version && "opacity-50 hover:opacity-80"

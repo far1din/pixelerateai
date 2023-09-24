@@ -13,8 +13,9 @@ type MainContextProps = {
 
 export type AiModelProps =
     | {
+          id: string;
           name: string;
-          status: $Enums.CustomAiModelStatus;
+          status: $Enums.Status;
           version: string | null;
           imagesTaken: number;
           coverImage: string | null;

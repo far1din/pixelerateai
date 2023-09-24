@@ -13,6 +13,7 @@ type ModelProps = ({
 
 const reformatModels = (models: ModelProps) => {
     return models.map((model) => ({
+        id: model.id,
         name: model.model_nickname,
         status: model.status,
         version: model.status === "created" ? model.replicate_model_version : null,
