@@ -25,7 +25,7 @@ function MenuSheet(props: { session: Session }) {
             <div className="flex flex-col gap-4 py-4">
                 <Link href={"/"}>Home</Link>
                 <Link href={"/my-models"}>My models</Link>
-                <Link href={"/"}>Gallery</Link>
+                <Link href={"/gallery"}>Gallery</Link>
             </div>
             <SheetFooter className="border-t-2 py-2 justify-between">
                 <button onClick={() => signOut()} className="outline-none text-neutral-500">
