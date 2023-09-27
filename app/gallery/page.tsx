@@ -4,7 +4,7 @@ import MasonaryGrid from "./components/MasonaryGrid";
 
 function page() {
     return (
-        <main className="h-screen flex flex-col items-center">
+        <main className="h-screen flex flex-col items-center w-[calc(100vw-18px)]">
             <div className="max-w-7xl w-full">
                 <Navigation />
                 <div className="flex flex-col p-4 gap-5">

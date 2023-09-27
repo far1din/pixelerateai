@@ -28,7 +28,7 @@ function ImageDialog_(props: ImageDialogProps) {
                             {props.modelName}
                         </p>
                         <Image
-                            className="w-full h-auto rounded-lg cursor-pointer"
+                            className="w-full h-auto max-h-[340px] sm:max-h-full object-contain rounded-lg cursor-pointer"
                             src={currentImage}
                             alt="ai generated image"
                             width={1000}
