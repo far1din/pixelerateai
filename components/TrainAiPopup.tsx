@@ -1,10 +1,10 @@
 "use client";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import InputFields from "./TrainAiPopup/InputFields";
-import ImageUpload from "./TrainAiPopup/ImageUpload";
-import Preview from "./TrainAiPopup/Preview";
-import UploadButton from "./TrainAiPopup/UploadButton";
-import { TrainAiPopupContextProvider } from "./TrainAiPopup/TrainAiPopupContext";
+import InputFields from "./trainAiPopup/InputFields";
+import ImageUpload from "./trainAiPopup/ImageUpload";
+import Preview from "./trainAiPopup/Preview";
+import UploadButton from "./trainAiPopup/UploadButton";
+import { TrainAiPopupContextProvider } from "./trainAiPopup/TrainAiPopupContext";
 
 type TrainAiPopupProps = {
     children: React.ReactNode;

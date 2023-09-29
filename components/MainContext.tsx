@@ -9,6 +9,8 @@ type MainContextProps = {
     customAiModels: AiModelProps;
     defaultAiModels: AiModelProps;
     handleThemeChange: () => void;
+
+    credits: number | null;
 };
 
 export type AiModelProps =
@@ -30,6 +32,8 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
     const [customAiModels, setCustomAiModels] = useState<AiModelProps>(null);
     const [defaultAiModels, setDefaultAiModels] = useState<AiModelProps>(null);
 
+    const [credits, setCredits] = useState<number | null>(null);
+
     useEffect(() => {
         const prefersDarkmode: boolean = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const systemTheme: ThemeProps = prefersDarkmode ? "dark" : "light";
@@ -43,6 +47,7 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
             .then((res) => {
                 setDefaultAiModels(res.data.defaultAiModels);
                 setCustomAiModels(res.data.customAiModels);
+                setCredits(res.data.credits);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -63,7 +68,7 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
     };
 
     return (
-        <MainContext.Provider value={{ theme, defaultAiModels, customAiModels, handleThemeChange }}>
+        <MainContext.Provider value={{ credits, theme, defaultAiModels, customAiModels, handleThemeChange }}>
             {children}
         </MainContext.Provider>
     );

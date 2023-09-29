@@ -49,6 +49,7 @@ export async function GET(request: Request) {
 
     const defaultAiModels = reformatModels(models.filter((model) => model.user_id === null));
     const customAiModels = reformatModels(models.filter((model) => model.user_id === user.id));
+    const credits = user.credit;
 
-    return NextResponse.json({ defaultAiModels, customAiModels });
+    return NextResponse.json({ defaultAiModels, customAiModels, credits });
 }
