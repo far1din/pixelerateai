@@ -33,3 +33,16 @@ export const DEFAULT_MODELS = [
 
 export type DefaultDimensionsProps = 128 | 256 | 512 | 576 | 640 | 704 | 768 | 832 | 896 | 960 | 1024;
 export const DEFAULT_DIMENSIONS: DefaultDimensionsProps[] = [128, 256, 512, 576, 640, 704, 768, 832, 896, 960, 1024];
+
+export const PLANS = {
+    subscription: {
+        name: "Pixelerate PRO",
+        credits: 251,
+        priceId: "price_1Nw7fPAsm5pyjv2ayLBxoMRU",
+    },
+    payment: {
+        name: "Pixelerate basic",
+        credits: 101,
+        priceId: "price_1Nw7gKAsm5pyjv2aryd2vvC6",
+    },
+};

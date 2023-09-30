@@ -26,4 +26,8 @@ export const config = {
     matcher: "/:path*",
 };
 
-const ignoredPaths = ["/api/replicate/train-model/webhook", "/api/replicate/create-image/prediction/webhook"];
+const ignoredPaths = [
+    "/api/replicate/train-model/webhook",
+    "/api/replicate/create-image/prediction/webhook",
+    "/api/payment/webhook",
+];

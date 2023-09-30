@@ -1,7 +1,10 @@
 import { prisma } from "@/prisma/client";
+import axios from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { Session } from "next-auth";
 import { twMerge } from "tailwind-merge";
+
+import { loadStripe } from "@stripe/stripe-js";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -28,4 +31,16 @@ export const getUserEmailFromSession = (session: Session | null) => {
     if (!email) return null;
 
     return email;
+};
+
+export type PlanTypeProps = "subscription" | "payment";
+
+export const redirectToStripeCheckout = (planType: PlanTypeProps) => {
+    axios
+        .post("/api/payment/create-checkout-session", { planType }, headers)
+        .then(async ({ data }) => {
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+            await stripe?.redirectToCheckout({ sessionId: data.sessionId });
+        })
+        .catch((err) => console.log(err));
 };

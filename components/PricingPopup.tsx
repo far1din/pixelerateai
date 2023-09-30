@@ -21,11 +21,13 @@ function PricingPopup(props: PricingPopupProps) {
                         title="251 Credits / Month"
                         description="At pixelerate, we believe that everyone should have simple access to AI!"
                         price={15}
+                        planType="subscription"
                         subscription
                     />
                     <PriceCard
                         title="101 Credits"
                         description="Perfect if you just want to test pixelerate and everything we offer!"
+                        planType="payment"
                         price={7}
                     />
                 </div>

@@ -51,6 +51,8 @@ model User {
   custom_ai_models CustomAiModel[]
   image_prompts    ImagePrompt[]
   generated_images GeneratedImage[]
+  subscriptions    Subscription[]
+  payments         Payment[]
 }
 
 model VerificationToken {
@@ -132,4 +134,34 @@ model GeneratedImage {
   user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   created_at DateTime @default(now())
+}
+
+model Subscription {
+  id  String    @id @default(cuid())
+
+  stripe_subscription_id    String @unique
+  stripe_price_id           String
+  stripe_customer_id        String
+  stripe_current_period_end DateTime
+
+  updated_at  DateTime @updatedAt @default(now())
+  created_at  DateTime @default(now())
+
+  user_id String
+  user    User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id  String    @id @default(cuid())
+
+  stripe_session_id String @unique
+  amount_paid       Int
+  credit_received   Int
+  plan_name         String
+  paid_at           DateTime @default(now())
+
+  created_at        DateTime @default(now())
+
+  user_id String
+  user    User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

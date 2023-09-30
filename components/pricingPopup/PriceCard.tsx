@@ -1,16 +1,21 @@
 import { CoinSVG } from "@/lib/svg";
+import { PlanTypeProps, redirectToStripeCheckout } from "@/lib/utils";
 
 type PriceCardProps = {
     title: string;
     description: string;
     price: number;
+    planType: PlanTypeProps;
 
     subscription?: boolean;
 };
 
 function PriceCard(props: PriceCardProps) {
     return (
-        <div className="hover:opacity-80 ease-in duration-75 cursor-pointer border-2 p-4 rounded-lg flex flex-col gap-4 bg-slate-50 dark:bg-slate-950">
+        <div
+            onClick={() => redirectToStripeCheckout(props.planType)}
+            className="hover:opacity-80 ease-in duration-75 cursor-pointer border-2 p-4 rounded-lg flex flex-col gap-4 bg-slate-50 dark:bg-slate-950"
+        >
             <div>
                 <h3 className="flex items-center gap-2 text-2xl font-semibold">
                     {props.title}
