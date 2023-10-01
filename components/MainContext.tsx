@@ -11,6 +11,7 @@ type MainContextProps = {
     handleThemeChange: () => void;
 
     credits: number | null;
+    isSubscribed: boolean | null;
 };
 
 export type AiModelProps =
@@ -33,6 +34,7 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
     const [defaultAiModels, setDefaultAiModels] = useState<AiModelProps>(null);
 
     const [credits, setCredits] = useState<number | null>(null);
+    const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
 
     useEffect(() => {
         const prefersDarkmode: boolean = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -48,6 +50,7 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
                 setDefaultAiModels(res.data.defaultAiModels);
                 setCustomAiModels(res.data.customAiModels);
                 setCredits(res.data.credits);
+                setIsSubscribed(res.data.isSubscribed);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -68,7 +71,9 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
     };
 
     return (
-        <MainContext.Provider value={{ credits, theme, defaultAiModels, customAiModels, handleThemeChange }}>
+        <MainContext.Provider
+            value={{ isSubscribed, credits, theme, defaultAiModels, customAiModels, handleThemeChange }}
+        >
             {children}
         </MainContext.Provider>
     );

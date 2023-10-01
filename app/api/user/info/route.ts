@@ -34,6 +34,7 @@ export async function GET(request: Request) {
 
     const user = await prisma.user.findUnique({
         where: { email: email },
+        include: { subscriptions: { select: { stripe_current_period_end: true }, orderBy: { created_at: "desc" } } },
     });
     if (!user)
         return NextResponse.json(
@@ -50,6 +51,7 @@ export async function GET(request: Request) {
     const defaultAiModels = reformatModels(models.filter((model) => model.user_id === null));
     const customAiModels = reformatModels(models.filter((model) => model.user_id === user.id));
     const credits = user.credit;
+    const isSubscribed = user.subscriptions[0]?.stripe_current_period_end > new Date();
 
-    return NextResponse.json({ defaultAiModels, customAiModels, credits });
+    return NextResponse.json({ defaultAiModels, customAiModels, credits, isSubscribed });
 }

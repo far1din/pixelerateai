@@ -1,5 +1,6 @@
 import { CoinSVG } from "@/lib/svg";
 import { PlanTypeProps, redirectToStripeCheckout } from "@/lib/utils";
+import { useMainContext } from "../MainContext";
 
 type PriceCardProps = {
     title: string;
@@ -11,10 +12,16 @@ type PriceCardProps = {
 };
 
 function PriceCard(props: PriceCardProps) {
+    const { isSubscribed } = useMainContext();
+
     return (
         <div
-            onClick={() => redirectToStripeCheckout(props.planType)}
-            className="hover:opacity-80 ease-in duration-75 cursor-pointer border-2 p-4 rounded-lg flex flex-col gap-4 bg-slate-50 dark:bg-slate-950"
+            onClick={() => (isSubscribed && props.subscription ? null : redirectToStripeCheckout(props.planType))}
+            className={`${
+                isSubscribed && props.subscription
+                    ? "opacity-80"
+                    : "hover:opacity-80 ease-in duration-75 cursor-pointer border-2"
+            } p-4 rounded-lg flex flex-col gap-4 bg-slate-50 dark:bg-slate-950`}
         >
             <div>
                 <h3 className="flex items-center gap-2 text-2xl font-semibold">

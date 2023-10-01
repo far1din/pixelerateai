@@ -32,7 +32,7 @@ function PricingPopup(props: PricingPopupProps) {
                     />
                 </div>
 
-                <div className="text-neutral-200">
+                <div className="dark:text-neutral-200">
                     <p className="text-xl font-medium mb-1">How do everything work?</p>
                     <p>🤖 Training Custom AI - 50 credits</p>
                     <p>📸 Everything else - 1 credits</p>
