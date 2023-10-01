@@ -46,8 +46,6 @@ export async function PUT(request: Request) {
     if (!subscription)
         return NextResponse.json({ message: "Failed", details: "No subscriptions found..." }, { status: 404 });
 
-    console.log(subscription);
-
     await prisma.subscription.update({
         where: { stripe_subscription_id: user.subscriptions[0].stripe_subscription_id },
         data: {

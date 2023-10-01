@@ -48,7 +48,6 @@ export async function POST(request: Request) {
         }
     );
 
-    console.log(training);
     // save to our database
     const model = await prisma.customAiModel
         .create({

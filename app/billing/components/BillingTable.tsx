@@ -1,7 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useToast } from "@/components/ui/use-toast";
 import { CoinSVG } from "@/lib/svg";
-import { headers } from "@/lib/utils";
+import { headers, showErrorToast } from "@/lib/utils";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -25,6 +26,7 @@ type InvoiceProps = {
 
 function BillingTable() {
     const [invoices, setInvoices] = useState<InvoiceProps | null>(null);
+    const { toast } = useToast();
 
     useEffect(() => {
         axios
@@ -32,8 +34,10 @@ function BillingTable() {
             .then(({ data }) => {
                 setInvoices(data.invoices);
             })
-            .catch((err) => console.log(err));
-        //
+            .catch((err) => {
+                showErrorToast(toast, err);
+            });
+        // eslint-disable-next-line
     }, []);
 
     return (

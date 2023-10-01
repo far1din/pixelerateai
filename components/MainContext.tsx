@@ -1,6 +1,8 @@
+import { showErrorToast } from "@/lib/utils";
 import { $Enums } from "@prisma/client";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useToast } from "./ui/use-toast";
 
 type ThemeProps = "dark" | "light";
 
@@ -31,6 +33,8 @@ export type AiModelProps =
 const MainContext = createContext<MainContextProps | null>(null);
 
 export const MainContextProvider = ({ children }: { children: React.ReactNode }) => {
+    const { toast } = useToast();
+
     const [theme, setTheme] = useState<string>("");
     const [customAiModels, setCustomAiModels] = useState<AiModelProps>(null);
     const [defaultAiModels, setDefaultAiModels] = useState<AiModelProps>(null);
@@ -54,7 +58,9 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
                 setCredits(res.data.credits);
                 setIsSubscribed(res.data.isSubscribed);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showErrorToast(toast, err));
+
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {

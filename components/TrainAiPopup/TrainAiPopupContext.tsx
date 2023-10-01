@@ -1,7 +1,8 @@
-import { headers } from "@/lib/utils";
+import { headers, showErrorToast } from "@/lib/utils";
 import axios from "axios";
 import JSZip from "jszip";
 import { createContext, useContext, useState } from "react";
+import { useToast } from "../ui/use-toast";
 
 type TrainAiPopupContextProps = {
     modelName: string;
@@ -19,6 +20,8 @@ type TrainAiPopupContextProps = {
 const TrainAiPopupContext = createContext<TrainAiPopupContextProps | null>(null);
 
 export const TrainAiPopupContextProvider = ({ children }: { children: React.ReactNode }) => {
+    const { toast } = useToast();
+
     const [modelName, setModelName] = useState<string>("");
     const [images, setImages] = useState<(string | ArrayBuffer | null)[]>([]);
 
@@ -45,7 +48,7 @@ export const TrainAiPopupContextProvider = ({ children }: { children: React.Reac
             .then((res) => {
                 location.reload();
             })
-            .catch((err) => console.log(err))
+            .catch((err) => showErrorToast(toast, err))
             .finally(() => setIsLoading(false));
         //
     };
@@ -61,6 +64,7 @@ export const TrainAiPopupContextProvider = ({ children }: { children: React.Reac
             .get("/api/aws/presign")
             .then((res) => ({ presignedUrl: res.data.presignedUrl, zipUrl: res.data.zipUrl }))
             .catch((err) => {
+                showErrorToast(toast, err);
                 setIsLoading(false);
                 setErrorMessage("Failed to upload the images");
             });
@@ -76,6 +80,7 @@ export const TrainAiPopupContextProvider = ({ children }: { children: React.Reac
                 uploadModelToReplicate(response.zipUrl);
             })
             .catch((err) => {
+                showErrorToast(toast, err);
                 setIsLoading(false);
                 setErrorMessage("Failed to upload the images");
             });

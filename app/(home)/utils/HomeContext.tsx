@@ -1,6 +1,7 @@
 import { AiModelProps, useMainContext } from "@/components/MainContext";
+import { useToast } from "@/components/ui/use-toast";
 import { DefaultDimensionsProps, PUBLIC_IMAGES } from "@/lib/defaults";
-import { headers } from "@/lib/utils";
+import { headers, showErrorToast } from "@/lib/utils";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Prediction } from "replicate";
@@ -39,6 +40,7 @@ const TEST_IMAGES = [
 
 export const HomeContextProvider = ({ children }: { children: React.ReactNode }) => {
     const { defaultAiModels, customAiModels, setCredits } = useMainContext();
+    const { toast } = useToast();
 
     const [prompt, setPrompt] = useState<string>("");
     const [negativePrompt, setNegativePrompt] = useState<string>("");
@@ -79,7 +81,7 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
             .then((res) => pollReplicate(res.data.predictionId, numberOfOutputs))
             .catch((err) => {
                 setIsCreating(false);
-                console.log(err);
+                showErrorToast(toast, err);
             });
     };
 
@@ -88,7 +90,7 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
             let prediction: Prediction | null = await axios
                 .get(`api/replicate/create-image/prediction/${predictionId}`, headers)
                 .then((res) => res.data.prediction)
-                .catch((err) => null);
+                .catch((err) => showErrorToast(toast, err));
 
             if (prediction === null) {
                 break;
@@ -100,10 +102,11 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
                 setCredits((prev) => (prev != null ? prev - creditsToDeduct : prev));
                 break;
             } else if (prediction.status === "failed") {
-                console.log(prediction.error); // todo: fix toast error message
+                showErrorToast(toast, prediction.error);
                 setIsCreating(false);
                 break;
             } else if (prediction.status === "canceled") {
+                showErrorToast(toast, prediction.error);
                 setIsCreating(false);
                 break;
             } else {

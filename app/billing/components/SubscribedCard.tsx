@@ -4,14 +4,16 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PLANS } from "@/lib/defaults";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
-import { headers } from "@/lib/utils";
+import { headers, showErrorToast } from "@/lib/utils";
 import DefaultAlertDialog from "@/components/DefaultAlertDialog";
 import { useMainContext } from "@/components/MainContext";
 import PricingPopup from "@/components/PricingPopup";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/components/ui/use-toast";
 
 function SubscribedCard() {
     const { isSubscribed, setIsSubscribed } = useMainContext();
+    const { toast } = useToast();
 
     const handleUpdatePaymen = () => {
         axios
@@ -20,7 +22,7 @@ function SubscribedCard() {
                 const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
                 await stripe?.redirectToCheckout({ sessionId: data.sessionId });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showErrorToast(toast, err));
     };
 
     const handleCancelSubscription = () => {
@@ -29,7 +31,7 @@ function SubscribedCard() {
             .then(async ({ data }) => {
                 setIsSubscribed(false);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showErrorToast(toast, err));
     };
 
     return (

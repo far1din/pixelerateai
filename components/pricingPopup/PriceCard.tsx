@@ -1,6 +1,7 @@
 import { CoinSVG } from "@/lib/svg";
 import { PlanTypeProps, redirectToStripeCheckout } from "@/lib/utils";
 import { useMainContext } from "../MainContext";
+import { useToast } from "../ui/use-toast";
 
 type PriceCardProps = {
     title: string;
@@ -13,10 +14,13 @@ type PriceCardProps = {
 
 function PriceCard(props: PriceCardProps) {
     const { isSubscribed } = useMainContext();
+    const { toast } = useToast();
 
     return (
         <div
-            onClick={() => (isSubscribed && props.subscription ? null : redirectToStripeCheckout(props.planType))}
+            onClick={() =>
+                isSubscribed && props.subscription ? null : redirectToStripeCheckout(props.planType, toast)
+            }
             className={`${
                 isSubscribed && props.subscription
                     ? "opacity-80"
