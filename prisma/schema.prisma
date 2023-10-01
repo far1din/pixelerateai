@@ -69,6 +69,11 @@ enum Status {
   failed
 }
 
+enum SubscriptionStatus {
+  active
+  inactive
+}
+
 enum Visibility {
   private
   public
@@ -137,7 +142,8 @@ model GeneratedImage {
 }
 
 model Subscription {
-  id  String    @id @default(cuid())
+  id     String    @id @default(cuid())
+  status SubscriptionStatus @default(active)
 
   stripe_subscription_id    String @unique
   stripe_price_id           String

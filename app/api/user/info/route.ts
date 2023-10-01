@@ -34,7 +34,13 @@ export async function GET(request: Request) {
 
     const user = await prisma.user.findUnique({
         where: { email: email },
-        include: { subscriptions: { select: { stripe_current_period_end: true }, orderBy: { created_at: "desc" } } },
+        include: {
+            subscriptions: {
+                where: { status: "active" },
+                select: { stripe_current_period_end: true },
+                orderBy: { created_at: "desc" },
+            },
+        },
     });
     if (!user)
         return NextResponse.json(

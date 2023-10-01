@@ -12,6 +12,7 @@ type MainContextProps = {
 
     credits: number | null;
     isSubscribed: boolean | null;
+    setIsSubscribed: React.Dispatch<React.SetStateAction<boolean | null>>;
 };
 
 export type AiModelProps =
@@ -72,7 +73,15 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
 
     return (
         <MainContext.Provider
-            value={{ isSubscribed, credits, theme, defaultAiModels, customAiModels, handleThemeChange }}
+            value={{
+                isSubscribed,
+                setIsSubscribed,
+                credits,
+                theme,
+                defaultAiModels,
+                customAiModels,
+                handleThemeChange,
+            }}
         >
             {children}
         </MainContext.Provider>

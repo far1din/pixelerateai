@@ -1,10 +1,9 @@
 import Stripe from "stripe";
-import { PlanTypeProps, getUserEmailFromSession } from "@/lib/utils";
+import { getUserEmailFromSession } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { prisma } from "@/prisma/client";
-import { PLANS } from "@/lib/defaults";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: "2023-08-16",
@@ -15,14 +14,6 @@ export async function POST(request: Request) {
     const url = new URL(referer);
 
     const originUrl = url.origin + url.pathname;
-
-    // Get plantype
-    const { planType }: { planType: null | PlanTypeProps } = await request.json();
-    if (!planType)
-        return NextResponse.json(
-            { message: "Invalid data", details: "Please provide a valid plan type..." },
-            { status: 400 }
-        );
 
     // Get and validate user
     const session = await getServerSession(authOptions);
@@ -35,6 +26,16 @@ export async function POST(request: Request) {
 
     const user = await prisma.user.findUnique({
         where: { email: email },
+        include: {
+            subscriptions: {
+                where: { status: "active" },
+                orderBy: { created_at: "desc" },
+                select: {
+                    stripe_subscription_id: true,
+                    stripe_customer_id: true,
+                },
+            },
+        },
     });
     if (!user)
         return NextResponse.json(
@@ -42,15 +43,22 @@ export async function POST(request: Request) {
             { status: 401 }
         );
 
+    if (user.subscriptions.length === 0)
+        return NextResponse.json({ message: "Failed", details: "No subscriptions found..." }, { status: 400 });
+
     // Create stripe checkout session
     const stripeSession = await stripe.checkout.sessions.create({
-        mode: planType,
-        line_items: [{ price: PLANS[planType].priceId, quantity: 1 }],
-        success_url: `${originUrl}/?success=true`,
-        cancel_url: `${originUrl}/?cancel=true`,
-        metadata: {
-            user_id: user.id,
+        payment_method_types: ["card"],
+        mode: "setup",
+        customer: user.subscriptions[0].stripe_customer_id,
+        setup_intent_data: {
+            metadata: {
+                customer_id: user.subscriptions[0].stripe_customer_id,
+                subscription_id: user.subscriptions[0].stripe_subscription_id,
+            },
         },
+        success_url: `${originUrl}/?success=true`,
+        cancel_url: `${originUrl}`,
     });
 
     return NextResponse.json({ sessionId: stripeSession.id });
