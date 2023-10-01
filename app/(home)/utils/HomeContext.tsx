@@ -38,7 +38,7 @@ const TEST_IMAGES = [
 ];
 
 export const HomeContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const { defaultAiModels, customAiModels } = useMainContext();
+    const { defaultAiModels, customAiModels, setCredits } = useMainContext();
 
     const [prompt, setPrompt] = useState<string>("");
     const [negativePrompt, setNegativePrompt] = useState<string>("");
@@ -76,14 +76,14 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
         // create a prediction
         axios
             .post("/api/replicate/create-image", data, headers)
-            .then((res) => pollReplicate(res.data.predictionId))
+            .then((res) => pollReplicate(res.data.predictionId, numberOfOutputs))
             .catch((err) => {
                 setIsCreating(false);
                 console.log(err);
             });
     };
 
-    const pollReplicate = async (predictionId: string) => {
+    const pollReplicate = async (predictionId: string, creditsToDeduct: number) => {
         while (true) {
             let prediction: Prediction | null = await axios
                 .get(`api/replicate/create-image/prediction/${predictionId}`, headers)
@@ -94,10 +94,10 @@ export const HomeContextProvider = ({ children }: { children: React.ReactNode })
                 break;
             }
 
-            console.log(prediction);
             if (prediction.status === "succeeded") {
                 setIsCreating(false);
                 setGeneratedImages(prediction.output);
+                setCredits((prev) => (prev != null ? prev - creditsToDeduct : prev));
                 break;
             } else if (prediction.status === "failed") {
                 console.log(prediction.error); // todo: fix toast error message

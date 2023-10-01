@@ -11,6 +11,7 @@ type MainContextProps = {
     handleThemeChange: () => void;
 
     credits: number | null;
+    setCredits: React.Dispatch<React.SetStateAction<number | null>>;
     isSubscribed: boolean | null;
     setIsSubscribed: React.Dispatch<React.SetStateAction<boolean | null>>;
 };
@@ -77,6 +78,7 @@ export const MainContextProvider = ({ children }: { children: React.ReactNode })
                 isSubscribed,
                 setIsSubscribed,
                 credits,
+                setCredits,
                 theme,
                 defaultAiModels,
                 customAiModels,

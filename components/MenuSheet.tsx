@@ -7,6 +7,7 @@ import { SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } 
 
 import ToggleTheme from "./ToggleTheme";
 import { PUBLIC_IMAGES } from "@/lib/defaults";
+import { Receipt } from "lucide-react";
 
 function MenuSheet(props: { session: Session }) {
     return (
@@ -23,9 +24,18 @@ function MenuSheet(props: { session: Session }) {
                 <SheetDescription className="!mt-0">Ready to snap some photos? 📸</SheetDescription>
             </SheetHeader>
             <div className="flex flex-col gap-4 py-4">
-                <Link href={"/"}>Home</Link>
-                <Link href={"/my-models"}>My models</Link>
-                <Link href={"/gallery"}>Gallery</Link>
+                <Link className="hover:opacity-80 ease-in duration-75" href={"/"}>
+                    Home
+                </Link>
+                <Link className="hover:opacity-80 ease-in duration-75" href={"/my-models"}>
+                    My models
+                </Link>
+                <Link className="hover:opacity-80 ease-in duration-75" href={"/gallery"}>
+                    Gallery
+                </Link>
+                <Link className="flex gap-2 hover:opacity-80 ease-in duration-75" href={"/billing"}>
+                    Billing <Receipt />{" "}
+                </Link>
             </div>
             <SheetFooter className="border-t-2 py-2 justify-between">
                 <button onClick={() => signOut()} className="outline-none text-neutral-500">

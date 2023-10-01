@@ -66,7 +66,7 @@ function SubscribedCard() {
                 <div className="space-y-1">
                     <p className="text-sm dark:text-neutral-300">You dont have any active subscriptions...</p>
                     <PricingPopup>
-                        <div className="hover:opacity-80 ease-in duration-75 text-lg px-3 py-1 bg-violet-500 rounded-full">
+                        <div className="w-max hover:opacity-80 ease-in duration-75 text-lg px-3 py-1 bg-violet-500 rounded-full">
                             upgrade now
                         </div>
                     </PricingPopup>

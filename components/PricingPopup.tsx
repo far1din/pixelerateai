@@ -7,7 +7,7 @@ type PricingPopupProps = {
 function PricingPopup(props: PricingPopupProps) {
     return (
         <Dialog>
-            <DialogTrigger>{props.children}</DialogTrigger>
+            <DialogTrigger asChild>{props.children}</DialogTrigger>
             <DialogContent className="max-w-3xl dark:bg-black">
                 <div className="flex flex-col gap-1">
                     <h3 className="text-3xl font-semibold">Pricing Made Simple</h3>

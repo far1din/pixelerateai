@@ -27,7 +27,12 @@ export async function POST(request: Request) {
             { status: 401 }
         );
 
-    // todo: add stripe payment
+    const credits = user.credit - 50;
+    if (credits < 0)
+        return NextResponse.json(
+            { message: "Failed", details: "You don't have enough credits to perform this task..." },
+            { status: 400 }
+        );
 
     // replicate
     const training = await replicate.trainings.create(

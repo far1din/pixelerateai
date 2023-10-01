@@ -3,8 +3,11 @@ import { InfoIcon, Loader2 } from "lucide-react";
 import Dropdown_ from "./Dropdown_";
 import Counter_ from "./Counter_";
 import { useHomeContext } from "../utils/HomeContext";
+import { CoinSVG } from "@/lib/svg";
+import { useMainContext } from "@/components/MainContext";
 
 function Inputs() {
+    const { credits } = useMainContext();
     const {
         isCreating,
         prompt,
@@ -16,9 +19,10 @@ function Inputs() {
         height,
         setHeight,
         handleCreate,
+        numberOfOutputs,
     } = useHomeContext();
 
-    const disabled = prompt.length < 1 || isCreating;
+    const disabled = prompt.length < 1 || isCreating || credits! - numberOfOutputs < 0;
     return (
         <>
             {/* Prompt */}
@@ -89,7 +93,7 @@ function Inputs() {
             </div>
 
             {/* Create */}
-            <div>
+            <div className="flex items-center gap-4">
                 <button
                     disabled={disabled}
                     onClick={() => handleCreate()}
@@ -99,6 +103,9 @@ function Inputs() {
                 >
                     {isCreating ? <Loader2 width={28} height={28} className="animate-spin" /> : "Create"}
                 </button>
+                <div className="bg-slate-50 dark:bg-black flex gap-3 text-lg items-center border-2 px-3 rounded-full">
+                    {numberOfOutputs} <CoinSVG width={21} height={21} />
+                </div>
             </div>
         </>
     );
