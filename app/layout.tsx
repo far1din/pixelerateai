@@ -13,10 +13,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={`${montserrat.className} bg-yellow-50/20 dark:bg-black ease-in duration-75`}>
-                <MainProvider>{children}</MainProvider>
-                <Toaster />
-            </body>
+            <MainProvider>
+                <body className={`${montserrat.className} bg-yellow-50/20 dark:bg-black ease-in duration-75`}>
+                    {children}
+                    <Toaster />
+                </body>
+            </MainProvider>
         </html>
     );
 }

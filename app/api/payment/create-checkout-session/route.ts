@@ -46,8 +46,8 @@ export async function POST(request: Request) {
     const stripeSession = await stripe.checkout.sessions.create({
         mode: planType,
         line_items: [{ price: PLANS[planType].priceId, quantity: 1 }],
-        success_url: `${originUrl}/?success=true`,
-        cancel_url: `${originUrl}/?cancel=true`,
+        success_url: `${originUrl}/?success-message=Payment was successfull. ${PLANS[planType].credits} credits was added to your account!`,
+        cancel_url: `${originUrl}/?error-message=Payment was cancelled...`,
         metadata: {
             user_id: user.id,
         },
