@@ -57,7 +57,7 @@ export async function POST(request: Request) {
                 subscription_id: user.subscriptions[0].stripe_subscription_id,
             },
         },
-        success_url: `${originUrl}/?success=true`,
+        success_url: `${originUrl}/?success-message=Your payment method was updated successfully.`,
         cancel_url: `${originUrl}`,
     });
 
