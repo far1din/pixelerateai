@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from "lucide-react";
-import { useMainContext } from "./MainContext";
+import { useMainContext } from "@/components/MainContext";
 
 function ToggleTheme() {
     const { theme, handleThemeChange } = useMainContext();

@@ -2,7 +2,7 @@ import { showErrorToast } from "@/lib/utils";
 import { $Enums } from "@prisma/client";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 type ThemeProps = "dark" | "light";
 

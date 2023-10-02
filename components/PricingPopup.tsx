@@ -1,5 +1,5 @@
-import PriceCard from "./pricingPopup/PriceCard";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import PriceCard from "@/components/pricingPopup/PriceCard";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 type PricingPopupProps = {
     children: React.ReactNode;

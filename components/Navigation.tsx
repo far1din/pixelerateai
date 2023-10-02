@@ -3,15 +3,14 @@ import { CoinSVG, PixelerateLogoSVG } from "@/lib/svg";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import MenuSheet from "./MenuSheet";
+import MenuSheet from "@/components/MenuSheet";
 import { PUBLIC_IMAGES } from "@/lib/defaults";
 import { Plus } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import PricingPopup from "./PricingPopup";
-import { useMainContext } from "./MainContext";
+import PricingPopup from "@/components/PricingPopup";
+import { useMainContext } from "@/components/MainContext";
 
 function Navigation() {
     const { credits } = useMainContext();
