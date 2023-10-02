@@ -34,6 +34,11 @@ export async function POST(request: Request) {
             { status: 400 }
         );
 
+    await prisma.user.update({
+        where: { id: user.id },
+        data: { credit: credits },
+    });
+
     // replicate
     const training = await replicate.trainings.create(
         "stability-ai",
