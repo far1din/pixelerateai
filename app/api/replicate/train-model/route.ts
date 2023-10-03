@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     const training = await replicate.trainings.create(
         "stability-ai",
         "sdxl",
-        "d830ba5dabf8090ec0db6c10fc862c6eb1c929e1a194a5411852d25fd954ac82",
+        "1bfb924045802467cf8869d96b231a12e6aa994abfe37e337c63a4e49a8c6c41",
         {
             destination: destination,
             input: {
