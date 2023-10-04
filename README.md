@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# What is [pixelerate](https://app.pixelerate.ai)?
 
-## Getting Started
+Have you ever wanted to train your own custom diffusion models? Whether that be on images of yourself, your cat, dog, house, Edvard Munch styled images etc. you name it. Recent advances in AI has now made it possible! 🤖
 
-First, run the development server:
+[Pixelerate.ai](https://app.pixelerate.ai) is a web application that allows you to train and run exactly these kind of models. This project has been open sourced to the community and this repository contains the code used in production as of `10/03/2023`. If you want to watch the entire tutorial series on how this was built, the series will be posted on my [X account @far1din\_](https://twitter.com/far1din_).
+
+![Screenshot from pixelerate.ai](https://pixelerateai.s3.eu-west-1.amazonaws.com/public-images/github_1.jpeg)
+
+![Screenshot from pixelerate.ai](https://pixelerateai.s3.eu-west-1.amazonaws.com/public-images/github_2.jpeg)
+
+## Technologies used
+
+🖥️ - Frontend/backend >> [NextJS](https://nextjs.org/)\
+🔐 - Authentication >> [NextAuth](https://next-auth.js.org/)\
+🤖 - Training and running model (API) >> [Replicate](https://replicate.com/)\
+📦 - Storage >> [AWS](https://aws.amazon.com/)\
+💸 - Payment processing >> [Stripe](https://stripe.com/)
+
+## Run the production version locally
+
+Clone the repository 🖨:
+
+```bash
+git clone https://github.com/far1din/pixelerateai.git
+```
+
+Then, we need to seup all the variables in the .env file:\
+`1. Get the github client ID and the github secret key from your github account`
+
+`2. Create a S3 bucket and set it to be public. Now you will need to specify the chosen region, the bucket name, the access and secret key. You will need to create a admin IAM user in order to get the access and secret key.`
+
+`3. Setup a replicate token. Then you will need to specify the webhook urls. You can do this for free using `[ngrok](https://ngrok.com/).
+
+`4. You will need to setup stripe and add the publishable key, secret key and the webhook secret`
+
+Once you've finished setting up all the keys 👆 you can run the following to install all the dependencies in `package.json`:
+
+```bash
+npm i
+```
+
+Now, you can finally run the project 🚀
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### _- I will link to the videos once they're public!_ 😃
