@@ -34,6 +34,7 @@ export async function GET(request: Request) {
             },
             custom_ai_model: { select: { model_nickname: true } },
         },
+        orderBy: { created_at: "desc" },
         take: GALLERY_HITS_PER_PAGE,
         skip: (page - 1) * GALLERY_HITS_PER_PAGE,
     });
