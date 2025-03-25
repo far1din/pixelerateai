@@ -6,7 +6,7 @@ Have you ever wanted to train your own custom diffusion models? Whether that be 
 
 ![Screenshot from pixelerate.ai](/public/github_1.jpg)
 
-## Technologies used
+## Technologies used 
 
 🖥️ - Frontend/backend >> [NextJS](https://nextjs.org/)\
 🔐 - Authentication >> [NextAuth](https://next-auth.js.org/)\
