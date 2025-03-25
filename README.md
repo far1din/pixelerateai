@@ -4,9 +4,7 @@ Have you ever wanted to train your own custom diffusion models? Whether that be 
 
 [Pixelerate.ai](https://app.pixelerate.ai) is a web application that allows you to train and run exactly these kind of models. This project has been open sourced to the community and this repository contains the code used in production as of `10/03/2023`. If you want to watch the entire tutorial series on how this was built, the series will be posted on my [X account @far1din\_](https://twitter.com/far1din_).
 
-![Screenshot from pixelerate.ai](https://pixelerateai.s3.eu-west-1.amazonaws.com/public-images/github_1.jpeg)
-
-![Screenshot from pixelerate.ai](https://pixelerateai.s3.eu-west-1.amazonaws.com/public-images/github_2.jpeg)
+![Screenshot from pixelerate.ai](/github_1.jpg)
 
 ## Technologies used
 
